@@ -2,6 +2,7 @@ package drawing;
 
 import drawing.shapes.Line;
 import drawing.shapes.Shape;
+import drawing.writing.DrawWriter;
 import drawing.writing.JPEGWriter;
 import drawing.writing.PNGWriter;
 
@@ -29,27 +30,50 @@ public class Drawing {
      * @param filename file name
      */
     public void draw(String format, String filename) {
-        // TODO: Do you notice any issues here?
-        if (format.equals("jpeg")) {
-            try (Writer writer = new JPEGWriter(filename + ".jpeg")) {
+        // Duplicated draw Functionality for Each File Format
+        DrawWriter writer = null;
+        try {
+            if (format.equals("jpeg")) {
+                writer = new JPEGWriter(filename + ".jpeg");
+            } else if (format.equals("png")) {
+                writer = new PNGWriter(filename + ".png");
+            }
+            if (writer != null) {
                 for (Shape shape : this.shapes) {
-                    // TODO: What is the issue of the behavior here?
                     Line[] lines = shape.toLines();
                     shape.draw(writer, lines);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        } else if (format.equals("png")) {
-            try (Writer writer = new PNGWriter(filename + ".png")) {
-                for (Shape shape : this.shapes) {
-                    Line[] lines = shape.toLines();
-                    shape.draw(writer, lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+//        if (format.equals("jpeg")) {
+//            try (Writer writer = new JPEGWriter(filename + ".jpeg")) {
+//                for (Shape shape : this.shapes) {
+//                    Line[] lines = shape.toLines();
+//                    shape.draw(writer, lines);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else if (format.equals("png")) {
+//            try (Writer writer = new PNGWriter(filename + ".png")) {
+//                for (Shape shape : this.shapes) {
+//                    Line[] lines = shape.toLines();
+//                    shape.draw(writer, lines);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 }
 

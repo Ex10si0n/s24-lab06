@@ -1,5 +1,7 @@
 package drawing.shapes;
 
+import drawing.Drawing;
+import drawing.writing.DrawWriter;
 import drawing.writing.JPEGWriter;
 import drawing.writing.PNGWriter;
 
@@ -23,7 +25,7 @@ public interface Shape {
     /**
      * Draws lines to file.
      */
-    default void draw(Writer writer, Line[] lines) {
+    default void draw(DrawWriter writer, Line[] lines) throws IOException {
         try {
             for (Line line : lines) {
                 // TODO: what is the purpose of the code there?

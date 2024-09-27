@@ -8,7 +8,7 @@ import java.io.Writer;
  *
  * @author Zishen Wen (F22), Deyuan Chen (S22)
  */
-public class PNGWriter extends Writer {
+public class PNGWriter implements DrawWriter {
     // This is a stub class. Pretend this writer work.
     public PNGWriter(String s) {
     }
